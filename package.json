@@ -1,6 +1,6 @@
 {
   "name": "@winterchenhuan/dsh-skills-viewer",
-  "description": "Read-only Skills settings page for DeepSeek Harness Web",
+  "description": "Read-only Skills settings page plugin for DeepSeek Harness Web",
   "version": "0.1.0",
   "publishConfig": {
     "access": "public"
@@ -9,6 +9,10 @@
     "type": "git",
     "url": "git+https://github.com/winterhuan/dsh-skills-viewer.git"
   },
+  "bugs": {
+    "url": "https://github.com/winterhuan/dsh-skills-viewer/issues"
+  },
+  "homepage": "https://github.com/winterhuan/dsh-skills-viewer#readme",
   "type": "module",
   "main": "lib/index.js",
   "types": "lib/types/index.d.ts",
@@ -29,6 +33,9 @@
     "./package.json": "./package.json"
   },
   "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
     "client": {
       "inject": [
         "@deepseek-ai/dsh-client-runtime",
@@ -40,9 +47,9 @@
     }
   },
   "scripts": {
-    "typecheck:harness": "tsc -b tsconfig.harness.json --pretty false",
-    "bundle:harness": "tsc -b tsconfig.harness.json --pretty false && tsdown",
-    "test:harness": "vitest run --config vitest.config.ts"
+    "build": "tsc -b tsconfig.json --pretty false && tsdown",
+    "test": "vitest run --config vitest.config.ts",
+    "typecheck": "tsc -b tsconfig.json --pretty false"
   },
   "license": "MIT",
   "peerDependencies": {
@@ -63,7 +70,7 @@
     "react-dom": "^18.2.0",
     "tsdown": "^0.22.2",
     "typescript": "~5.9.3",
-    "vite-tsconfig-paths": "^5.1.4",
+    "vite-tsconfig-paths": "^6.1.1",
     "vitest": "^4.1.8"
   },
   "files": [
@@ -72,7 +79,12 @@
     "lib/client.js",
     "lib/client.js.map",
     "lib/types/**/*.d.ts",
+    "cordis.patch.yml",
     "README.md",
     "README.zh.md"
-  ]
+  ],
+  "engines": {
+    "node": "^22.19 || >=24"
+  },
+  "packageManager": "pnpm@11.7.0"
 }

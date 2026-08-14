@@ -6,19 +6,31 @@ Custom Skills list settings page for DeepSeek Harness Web. It registers a "Skill
 
 ## Install
 
-This source tree is intended to be developed beside a DeepSeek Harness checkout until the Harness client packages are published with their complete dependency closure. From this directory inside the checkout, use the `*:harness` scripts for local validation.
+Install the bundle into the Web profile with the Harness plugin command:
 
-Add the package to the Web profile's Node resolution path, then add one client plugin row to the Web composition:
-
-```yaml
-plugins:
-  - id: skills-viewer
-    name: '@winterchenhuan/dsh-skills-viewer'
+```sh
+dsh plugin --profile web add @winterchenhuan/dsh-skills-viewer
+dsh --profile web --dump-config
+dsh --profile web web
 ```
 
-See `cordis.patch.example.yml` for the same row as a copyable patch file.
+The package declares `dsh.bundle`, so `dsh plugin add` inserts the `skills-viewer` row automatically; do not edit the profile's `cordis.patch.yml` by hand. The package also declares `dsh.client`, which lets the Web host serve its prebuilt browser bundle from `lib/client.js`.
 
-The package is a browser UI plugin with an empty node half. Its `dsh.client` manifest declares the client dependencies the Harness browser must load before the `./client` bundle.
+For a source checkout, build first and then install the local directory:
+
+```sh
+# From the DeepSeek Harness checkout that contains this directory at
+# custom-plugins/dsh-skills-viewer:
+pnpm exec tsc -b custom-plugins/dsh-skills-viewer --pretty false
+pnpm exec tsdown --config custom-plugins/dsh-skills-viewer/tsdown.config.ts
+pnpm dsh plugin --profile web add ./custom-plugins/dsh-skills-viewer
+```
+
+Remove it with:
+
+```sh
+dsh plugin --profile web remove @winterchenhuan/dsh-skills-viewer
+```
 
 ## Composition
 

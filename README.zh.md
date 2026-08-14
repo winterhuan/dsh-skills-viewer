@@ -6,19 +6,30 @@ DeepSeek Harness Web 的自定义技能列表设置页。它在 Settings 面板�
 
 ## 安装
 
-在 Harness client packages 以完整依赖闭包发布前，本源码树适合放在 DeepSeek Harness checkout 旁开发。从 checkout 内的本目录执行 `*:harness` scripts 进行本地验证。
+使用 Harness 插件命令安装到 Web profile：
 
-先把该包加入 Web profile 的 Node 解析路径，再在 Web composition 中添加一个 client plugin row：
-
-```yaml
-plugins:
-  - id: skills-viewer
-    name: '@winterchenhuan/dsh-skills-viewer'
+```sh
+dsh plugin --profile web add @winterchenhuan/dsh-skills-viewer
+dsh --profile web --dump-config
+dsh --profile web web
 ```
 
-`cordis.patch.example.yml` 提供同一 row，可直接复制为 patch 文件。
+该包声明了 `dsh.bundle`，因此 `dsh plugin add` 会自动插入 `skills-viewer` row，不需要手动修改 profile 的 `cordis.patch.yml`。该包也声明了 `dsh.client`，Web host 会据此加载预构建的浏览器 bundle `lib/client.js`。
 
-这是 browser UI 插件，node half 为空。它的 `dsh.client` manifest 声明 Harness 浏览器加载 `./client` bundle 前需要具备的 client 依赖。
+从源码 checkout 安装时，先构建再安装本地目录：
+
+```sh
+# 在包含 custom-plugins/dsh-skills-viewer 的 DeepSeek Harness checkout 根目录执行：
+pnpm exec tsc -b custom-plugins/dsh-skills-viewer --pretty false
+pnpm exec tsdown --config custom-plugins/dsh-skills-viewer/tsdown.config.ts
+pnpm dsh plugin --profile web add ./custom-plugins/dsh-skills-viewer
+```
+
+移除方式：
+
+```sh
+dsh plugin --profile web remove @winterchenhuan/dsh-skills-viewer
+```
 
 ## 组合
 
