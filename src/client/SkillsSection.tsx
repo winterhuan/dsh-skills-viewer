@@ -30,7 +30,14 @@ type LoadState =
   | { status: 'loading' }
   | { status: 'empty' }
   | { status: 'list'; skills: readonly SkillEntry[] }
+  | { status: 'unavailable' }
   | { status: 'error'; message: string }
+
+/** Retry cadence while the Host attaches the selected session. */
+const NOT_ATTACHED_RETRY_DELAYS_MS = [300, 1000] as const
+
+/** Business error raised while the selected session is still detached host-side. */
+class SessionNotAttachedError extends Error {}
 
 /**
  * Fetch the skill catalog for the given session.
@@ -44,7 +51,13 @@ async function fetchSkills(
   signal: AbortSignal,
 ): Promise<readonly SkillEntry[]> {
   const { result } = await api.skills.list({ sessionId }, signal)
-  if (!result.ok) throw new Error(`skill.list failed: ${result.error.code}: ${result.error.message}`)
+  if (!result.ok) {
+    const message = `skill.list failed: ${result.error.code}: ${result.error.message}`
+    if (result.error.code === 'session-not-found' && result.error.message.includes('not attached')) {
+      throw new SessionNotAttachedError(message)
+    }
+    throw new Error(message)
+  }
   return result.value.skills
 }
 
@@ -73,6 +86,7 @@ function SkillRow({ skill, modelOffLabel }: {
 export function SkillsSection(props: SkillsSectionProps): JSX.Element {
   const { api, useSessions, t } = props
   const [state, setState] = useState<LoadState>({ status: 'loading' })
+  const [retryNonce, setRetryNonce] = useState(0)
 
   const sessionId: SessionId | undefined = useSessions((sessions) => sessions.current)
   const subagentAddress = useSessions((sessions) => sessions.currentAddress)
@@ -84,28 +98,58 @@ export function SkillsSection(props: SkillsSectionProps): JSX.Element {
     }
     let cancelled = false
     const abort = new AbortController()
-    setState({ status: 'loading' })
-    fetchSkills(api, sessionId, abort.signal)
-      .then((skills) => {
-        if (cancelled) return
-        setState(skills.length === 0 ? { status: 'empty' } : { status: 'list', skills })
-      })
-      .catch((error: unknown) => {
-        if (cancelled) return
-        const message = error instanceof Error ? error.message : String(error)
-        setState({ status: 'error', message })
-      })
+    const timers: ReturnType<typeof setTimeout>[] = []
+    const load = (attempt: number): void => {
+      setState({ status: 'loading' })
+      fetchSkills(api, sessionId, abort.signal)
+        .then((skills) => {
+          if (cancelled) return
+          setState(skills.length === 0 ? { status: 'empty' } : { status: 'list', skills })
+        })
+        .catch((error: unknown) => {
+          if (cancelled) return
+          if (error instanceof SessionNotAttachedError) {
+            const delay = NOT_ATTACHED_RETRY_DELAYS_MS[attempt]
+            if (delay !== undefined) {
+              timers.push(setTimeout(() => {
+                if (!cancelled) load(attempt + 1)
+              }, delay))
+              return
+            }
+            setState({ status: 'unavailable' })
+            return
+          }
+          const message = error instanceof Error ? error.message : String(error)
+          setState({ status: 'error', message })
+        })
+    }
+    load(0)
     return () => {
       cancelled = true
       abort.abort()
+      for (const timer of timers) clearTimeout(timer)
     }
-  }, [api, sessionId, subagentAddress])
+  }, [api, sessionId, subagentAddress, retryNonce])
 
   if (state.status === 'loading') {
     return <div className={styles.placeholder}>{t?.('loading') ?? 'Loading...'}</div>
   }
   if (state.status === 'empty') {
     return <div className={styles.placeholder}>{t?.('empty') ?? 'No skills discovered.'}</div>
+  }
+  if (state.status === 'unavailable') {
+    return (
+      <div className={styles.placeholder}>
+        <div>{t?.('notAttached') ?? 'This session is not attached yet. Open its conversation, then retry.'}</div>
+        <button
+          type="button"
+          className={styles.retryButton}
+          onClick={() => { setRetryNonce(nonce => nonce + 1) }}
+        >
+          {t?.('retry') ?? 'Retry'}
+        </button>
+      </div>
+    )
   }
   if (state.status === 'error') {
     return <div className={styles.placeholder}>{state.message}</div>

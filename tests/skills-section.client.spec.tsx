@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { cleanup, render, screen, waitFor } from '@testing-library/react'
+import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import type { SessionListState } from '@deepseek-ai/dsh-client-runtime/client'
 import type { SessionId, SkillEntry, SubagentAddress } from '@deepseek-ai/dsh-api-remotes/client'
 import type { SnapshotSelectorHook } from '@deepseek-ai/dsh-client-ui-slots'
@@ -8,7 +8,10 @@ import { SkillsSection } from '../src/client/SkillsSection.tsx'
 import type { SkillsSectionProps } from '../src/client/SkillsSection.tsx'
 import { en } from '../src/client/locales.ts'
 
-afterEach(cleanup)
+afterEach(() => {
+  cleanup()
+  vi.useRealTimers()
+})
 
 const sessionOne = 'session-one' as SessionId
 const sessionTwo = 'session-two' as SessionId
@@ -32,6 +35,20 @@ function ok(skills: readonly SkillEntry[]) {
   return Promise.resolve({
     rpcId: 'skills' as never,
     result: { ok: true as const, value: { skills } },
+  })
+}
+
+function notAttached(sessionId: SessionId) {
+  return Promise.resolve({
+    rpcId: 'skills' as never,
+    result: {
+      ok: false as const,
+      error: {
+        code: 'session-not-found',
+        message: `session "${sessionId}" not found (not attached)`,
+        details: { sessionId },
+      },
+    },
   })
 }
 
@@ -99,6 +116,39 @@ describe('SkillsSection', () => {
     }) })
 
     await screen.findByText('skill.list failed: internal: boom')
+  })
+
+  it('retries while the selected session is attaching', async () => {
+    vi.useFakeTimers()
+    const list = vi.fn()
+      .mockImplementationOnce(() => notAttached(sessionOne))
+      .mockImplementationOnce(() => ok([{ name: 'code-review', description: 'Review code changes.', modelInvocable: true }]))
+    mount({ list })
+
+    expect(list).toHaveBeenCalledTimes(1)
+    await act(async () => { await vi.advanceTimersByTimeAsync(300) })
+
+    expect(list).toHaveBeenCalledTimes(2)
+    expect(screen.getByText('code-review')).toBeTruthy()
+    expect(screen.queryByText(/not attached/)).toBeNull()
+  })
+
+  it('offers a manual retry after automatic attach retries settle', async () => {
+    vi.useFakeTimers()
+    const list = vi.fn(() => notAttached(sessionOne))
+    mount({ list })
+
+    await act(async () => { await vi.advanceTimersByTimeAsync(300) })
+    await act(async () => { await vi.advanceTimersByTimeAsync(1000) })
+    expect(screen.getByText(en.notAttached)).toBeTruthy()
+    expect(list).toHaveBeenCalledTimes(3)
+
+    list.mockImplementationOnce(() => ok([{ name: 'code-review', description: 'Review code changes.', modelInvocable: true }]))
+    vi.useRealTimers()
+    fireEvent.click(screen.getByRole('button', { name: en.retry }))
+
+    await screen.findByText('code-review')
+    expect(list).toHaveBeenCalledTimes(4)
   })
 
   it('aborts an obsolete request when the current session changes', async () => {

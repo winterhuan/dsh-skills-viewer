@@ -1,7 +1,7 @@
 {
   "name": "@winterchenhuan/dsh-skills-viewer",
   "description": "Read-only Skills settings page plugin for DeepSeek Harness Web",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "publishConfig": {
     "access": "public"
   },

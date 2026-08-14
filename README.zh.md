@@ -37,7 +37,7 @@ dsh plugin --profile web remove @winterchenhuan/dsh-skills-viewer
 
 ## 页面行为
 
-页面从 `useSessions` 标准 prop 读取当前 session id 和当前 subagent address。当前导航指向普通 session 时，它调用 `connection.api.skills.list({ sessionId })` 获取目录。技能发现按 session 作用域解析：composition、cwd 和 preset layer 都会影响可见技能，因此页面会在当前 session 变化时重新获取。没有当前 session，或当前导航指向 subagent address 时，页面显示空态且不调用 `skill.list`。
+页面从 `useSessions` 标准 prop 读取当前 session id 和当前 subagent address。当前导航指向普通 session 时，它调用 `connection.api.skills.list({ sessionId })` 获取目录。技能发现按 session 作用域解析：composition、cwd 和 preset layer 都会影响可见技能，因此页面会在当前 session 变化时重新获取。没有当前 session，或当前导航指向 subagent address 时，页面显示空态且不调用 `skill.list`。如果选中的 session 尚未在 Host 侧连接，页面会短暂自动重试，随后显示重试按钮，而不是直接暴露原始 `session-not-found` 诊断。
 
 每条技能行展示：
 

@@ -38,7 +38,7 @@ This is a pure UI plugin. The node half `apply` is empty; the browser half is ex
 
 ## Page behavior
 
-The page reads the current session id and current subagent address from the `useSessions` standard prop. With an ordinary current session, it calls `connection.api.skills.list({ sessionId })` to fetch the catalog. Skill discovery is session-scoped: composition, cwd, and preset layer affect which skills are visible, so the page refetches when the current session changes. With no current session, or while the current navigation points at a subagent address, the page shows the empty state and does not call `skill.list`.
+The page reads the current session id and current subagent address from the `useSessions` standard prop. With an ordinary current session, it calls `connection.api.skills.list({ sessionId })` to fetch the catalog. Skill discovery is session-scoped: composition, cwd, and preset layer affect which skills are visible, so the page refetches when the current session changes. With no current session, or while the current navigation points at a subagent address, the page shows the empty state and does not call `skill.list`. A selected session that is still detached host-side is retried briefly and then shows a retry action instead of the raw `session-not-found` diagnostic.
 
 Each skill row displays:
 

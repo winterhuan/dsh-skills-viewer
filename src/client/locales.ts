@@ -17,6 +17,10 @@ const en = {
   countSuffix: ' skill(s) discovered',
   /** Model-invocable-off badge. */
   modelOff: 'model: off',
+  /** Retryable state while the selected session is detached host-side. */
+  notAttached: 'This session is not attached yet. Open its conversation, then retry.',
+  /** Retry button label. */
+  retry: 'Retry',
 } as const
 
 /** Chinese copy. */
@@ -28,6 +32,8 @@ const zh = {
   empty: '未发现技能。',
   countSuffix: ' 个技能已发现',
   modelOff: '模型不可调用',
+  notAttached: '该 session 尚未连接。请先打开它的会话，然后重试。',
+  retry: '重试',
 } as const
 
 /** Dictionary keys of this plugin. */
