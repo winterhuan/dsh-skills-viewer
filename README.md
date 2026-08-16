@@ -47,6 +47,8 @@ Each skill row displays:
 - **description** — routing description
 - **whenToUse** — optional extra routing guidance (italic)
 
+The list is sorted alphabetically by skill name. A search box filters rows by name, description, or `whenToUse` (case-insensitive); the count line shows `M of N` when a search narrows the result, and a no-match placeholder when nothing remains.
+
 ## Model Experience
 
 None, as this package only renders a browser settings UI; nothing here reaches a model request.

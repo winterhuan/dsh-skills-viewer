@@ -189,4 +189,42 @@ describe('SkillsSection', () => {
     await screen.findByText('new')
     expect(screen.queryByText('old')).toBeNull()
   })
+
+  it('renders skills sorted by name ascending', async () => {
+    const skills: SkillEntry[] = [
+      { name: 'zebra', description: 'Z.', modelInvocable: true },
+      { name: 'apple', description: 'A.', modelInvocable: true },
+      { name: 'mango', description: 'M.', modelInvocable: true },
+    ]
+    mount({ list: () => ok(skills) })
+
+    await screen.findByText('apple')
+    const names = screen.getAllByText(/^(apple|mango|zebra)$/)
+    expect(names.map((el) => el.textContent)).toEqual(['apple', 'mango', 'zebra'])
+  })
+
+  it('filters skills by a search query across name and description', async () => {
+    const skills: SkillEntry[] = [
+      { name: 'code-review', description: 'Review code changes.', whenToUse: 'Use before merging.', modelInvocable: true },
+      { name: 'local-only', description: 'Human-only workflow.', modelInvocable: false },
+    ]
+    mount({ list: () => ok(skills) })
+
+    await screen.findByText('code-review')
+    fireEvent.change(screen.getByPlaceholderText('Search skills...'), { target: { value: 'code' } })
+
+    await screen.findByText('code-review')
+    expect(screen.queryByText('local-only')).toBeNull()
+    expect(screen.getByText(/1 of 2/)).toBeTruthy()
+  })
+
+  it('shows the no-match state for an unmatched query', async () => {
+    mount({ list: () => ok([{ name: 'code-review', description: 'Review code changes.', modelInvocable: true }]) })
+
+    await screen.findByText('code-review')
+    fireEvent.change(screen.getByPlaceholderText('Search skills...'), { target: { value: 'zzz' } })
+
+    await screen.findByText('No skills match your search.')
+    expect(screen.queryByText('code-review')).toBeNull()
+  })
 })

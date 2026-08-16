@@ -87,6 +87,7 @@ export function SkillsSection(props: SkillsSectionProps): JSX.Element {
   const { api, useSessions, t } = props
   const [state, setState] = useState<LoadState>({ status: 'loading' })
   const [retryNonce, setRetryNonce] = useState(0)
+  const [query, setQuery] = useState('')
 
   const sessionId: SessionId | undefined = useSessions((sessions) => sessions.current)
   const subagentAddress = useSessions((sessions) => sessions.currentAddress)
@@ -156,21 +157,43 @@ export function SkillsSection(props: SkillsSectionProps): JSX.Element {
   }
 
   const skills = state.skills
+  const trimmed = query.trim().toLowerCase()
+  const sorted = [...skills].sort((a, b) => a.name.localeCompare(b.name))
+  const visible = trimmed === ''
+    ? sorted
+    : sorted.filter((skill) =>
+      skill.name.toLowerCase().includes(trimmed)
+      || skill.description.toLowerCase().includes(trimmed)
+      || (skill.whenToUse ?? '').toLowerCase().includes(trimmed),
+    )
+  const filtered = trimmed !== '' && visible.length !== skills.length
   return (
     <div className={styles.page}>
       <h2 className={styles.heading}>{t?.('heading') ?? 'Skills'}</h2>
       <p className={styles.description}>{t?.('description') ?? ''}</p>
+      <input
+        type="text"
+        className={styles.search}
+        value={query}
+        onChange={(e) => { setQuery(e.target.value) }}
+        placeholder={t?.('searchPlaceholder') ?? 'Search skills...'}
+        aria-label={t?.('searchPlaceholder') ?? 'Search skills...'}
+      />
       <div className={styles.count}>
-        {skills.length}
+        {filtered
+          ? `${visible.length}${t?.('filteredOf') ?? ' of '}${skills.length}`
+          : visible.length}
         {t?.('countSuffix') ?? ' skill(s) discovered'}
       </div>
-      {skills.map((skill) => (
-        <SkillRow
-          key={skill.name}
-          skill={skill}
-          modelOffLabel={t?.('modelOff') ?? 'model: off'}
-        />
-      ))}
+      {visible.length === 0
+        ? <div className={styles.placeholder}>{t?.('noMatches') ?? 'No skills match your search.'}</div>
+        : visible.map((skill) => (
+          <SkillRow
+            key={skill.name}
+            skill={skill}
+            modelOffLabel={t?.('modelOff') ?? 'model: off'}
+          />
+        ))}
     </div>
   )
 }

@@ -17,6 +17,12 @@ const en = {
   countSuffix: ' skill(s) discovered',
   /** Model-invocable-off badge. */
   modelOff: 'model: off',
+  /** Search box placeholder. */
+  searchPlaceholder: 'Search skills...',
+  /** Empty-filter state when a query matches nothing. */
+  noMatches: 'No skills match your search.',
+  /** Count separator shown when a filter narrows the list (e.g. "2 of 5"). */
+  filteredOf: ' of ',
   /** Retryable state while the selected session is detached host-side. */
   notAttached: 'This session is not attached yet. Open its conversation, then retry.',
   /** Retry button label. */
@@ -32,6 +38,9 @@ const zh = {
   empty: '未发现技能。',
   countSuffix: ' 个技能已发现',
   modelOff: '模型不可调用',
+  searchPlaceholder: '搜索技能...',
+  noMatches: '没有匹配的技能。',
+  filteredOf: ' / ',
   notAttached: '该 session 尚未连接。请先打开它的会话，然后重试。',
   retry: '重试',
 } as const

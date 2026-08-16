@@ -46,6 +46,8 @@ dsh plugin --profile web remove @winterchenhuan/dsh-skills-viewer
 - **description** — 路由描述
 - **whenToUse** — 可选的额外路由说明（斜体）
 
+列表按技能名升序排列。搜索框按 name、description 或 `whenToUse` 过滤（不区分大小写）；当搜索收窄结果时计数行显示 `M of N`，无匹配时显示占位提示。
+
 ## Model Experience
 
 None, as this package only renders a browser settings UI; nothing here reaches a model request.
