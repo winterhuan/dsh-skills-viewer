@@ -6,25 +6,28 @@ Custom Skills list settings page for DeepSeek Harness Web. It registers a "Skill
 
 ## Install
 
-Install the bundle into the Web profile with the Harness plugin command:
+Install the bundle into the Web profile with the Harness plugin command. Both `dsh` and `pnpm` must be on `PATH` (`dsh plugin` forwards its arguments to pnpm):
 
 ```sh
-dsh plugin --profile web add @winterchenhuan/dsh-skills-viewer
-dsh --profile web --dump-config
-dsh --profile web web
+dsh plugin --profile web add -w @winterchenhuan/dsh-skills-viewer
+dsh web --dump-config     # verify the skills-viewer layer is present
+dsh web                   # boot the Web GUI
 ```
+
+The `-w` (`--workspace-root`) flag is required because the Web profile directory is itself a pnpm workspace root (`pnpm-workspace.yaml` with `packages: [.]`); without it pnpm refuses `add` there with `ERR_PNPM_ADDING_TO_ROOT`. `dsh plugin` forwards arguments verbatim to pnpm, so the flag is passed through as-is.
 
 The package declares `dsh.bundle`, so `dsh plugin add` inserts the `skills-viewer` row automatically; do not edit the profile's `cordis.patch.yml` by hand. The package also declares `dsh.client`, which lets the Web host serve its prebuilt browser bundle from `lib/client.js`.
 
-For a source checkout, build first and then install the local directory:
+For a source checkout, place the directory at `custom-plugins/dsh-skills-viewer` inside a DeepSeek Harness checkout — `tsconfig.json` resolves `../../tsconfig.base.client.json`, `../../vendor/cordis`, and the `../../packages/*` project references from exactly that location — then build and install it:
 
 ```sh
-# From the DeepSeek Harness checkout that contains this directory at
-# custom-plugins/dsh-skills-viewer:
+# From the Harness checkout root:
 pnpm exec tsc -b custom-plugins/dsh-skills-viewer --pretty false
 pnpm exec tsdown --config custom-plugins/dsh-skills-viewer/tsdown.config.ts
-pnpm dsh plugin --profile web add ./custom-plugins/dsh-skills-viewer
+pnpm dsh plugin --profile web add -w ./custom-plugins/dsh-skills-viewer
 ```
+
+(`pnpm dsh` runs the checkout's own CLI from `apps/cli`; relative `add` path specs are anchored to the invoking directory.)
 
 Remove it with:
 
@@ -48,14 +51,6 @@ Each skill row displays:
 - **whenToUse** — optional extra routing guidance (italic)
 
 The list is sorted alphabetically by skill name. A search box filters rows by name, description, or `whenToUse` (case-insensitive); the count line shows `M of N` when a search narrows the result, and a no-match placeholder when nothing remains.
-
-## Model Experience
-
-None, as this package only renders a browser settings UI; nothing here reaches a model request.
-
-#### KV Cache effect
-
-None; this package neither assembles nor sends a provider request.
 
 ## Known Limitations and Deferred Work
 

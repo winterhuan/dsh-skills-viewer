@@ -6,24 +6,28 @@ DeepSeek Harness Web 的自定义技能列表设置页。它在 Settings 面板�
 
 ## 安装
 
-使用 Harness 插件命令安装到 Web profile：
+使用 Harness 插件命令安装到 Web profile（`dsh` 与 `pnpm` 都需在 `PATH` 中，`dsh plugin` 会把参数转发给 pnpm）：
 
 ```sh
-dsh plugin --profile web add @winterchenhuan/dsh-skills-viewer
-dsh --profile web --dump-config
-dsh --profile web web
+dsh plugin --profile web add -w @winterchenhuan/dsh-skills-viewer
+dsh web --dump-config     # 确认 skills-viewer 层已生效
+dsh web                   # 启动 Web GUI
 ```
+
+`-w`（`--workspace-root`）标志是必需的：Web profile 目录本身是一个 pnpm workspace 根（`pnpm-workspace.yaml` 内容为 `packages: [.]`），不加该标志时 pnpm 会以 `ERR_PNPM_ADDING_TO_ROOT` 拒绝 `add`。`dsh plugin` 会把参数原样转发给 pnpm，因此该标志会直接透传。
 
 该包声明了 `dsh.bundle`，因此 `dsh plugin add` 会自动插入 `skills-viewer` row，不需要手动修改 profile 的 `cordis.patch.yml`。该包也声明了 `dsh.client`，Web host 会据此加载预构建的浏览器 bundle `lib/client.js`。
 
-从源码 checkout 安装时，先构建再安装本地目录：
+从源码 checkout 安装时，请把目录放到 DeepSeek Harness checkout 内的 `custom-plugins/dsh-skills-viewer` 位置——`tsconfig.json` 正是从该位置向上解析 `../../tsconfig.base.client.json`、`../../vendor/cordis` 以及各 `../../packages/*` 项目引用——然后构建并安装本地目录：
 
 ```sh
-# 在包含 custom-plugins/dsh-skills-viewer 的 DeepSeek Harness checkout 根目录执行：
+# 在 Harness checkout 根目录执行：
 pnpm exec tsc -b custom-plugins/dsh-skills-viewer --pretty false
 pnpm exec tsdown --config custom-plugins/dsh-skills-viewer/tsdown.config.ts
-pnpm dsh plugin --profile web add ./custom-plugins/dsh-skills-viewer
+pnpm dsh plugin --profile web add -w ./custom-plugins/dsh-skills-viewer
 ```
+
+（`pnpm dsh` 运行的是该 checkout 自带的 CLI——`apps/cli`；`add` 的相对路径按调用目录解析。）
 
 移除方式：
 
@@ -48,15 +52,7 @@ dsh plugin --profile web remove @winterchenhuan/dsh-skills-viewer
 
 列表按技能名升序排列。搜索框按 name、description 或 `whenToUse` 过滤（不区分大小写）；当搜索收窄结果时计数行显示 `M of N`，无匹配时显示占位提示。
 
-## Model Experience
-
-None, as this package only renders a browser settings UI; nothing here reaches a model request.
-
-#### KV Cache effect
-
-None; this package neither assembles nor sends a provider request.
-
-## Known Limitations and Deferred Work
+## 已知限制与后续工作
 
 - **不预览技能正文** — 页面只列出摘要；加载技能正文仍需使用面向模型的 `skill` 工具。未来的内联预览可以调用新的 preview RPC。
 - **没有刷新按钮或推送失效** — 页面会在 session 变化时重新获取，但不会手动刷新，也不会订阅 `skills/change`。
