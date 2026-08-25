@@ -18,16 +18,18 @@ dsh web                   # 启动 Web GUI
 
 该包声明了 `dsh.bundle`，因此 `dsh plugin add` 会自动插入 `skills-viewer` row，不需要手动修改 profile 的 `cordis.patch.yml`。该包也声明了 `dsh.client`，Web host 会据此加载预构建的浏览器 bundle `lib/client.js`。
 
-从源码 checkout 安装时，请把目录放到 DeepSeek Harness checkout 内的 `custom-plugins/dsh-skills-viewer` 位置——`tsconfig.json` 正是从该位置向上解析 `../../tsconfig.base.client.json`、`../../vendor/cordis` 以及各 `../../packages/*` 项目引用——然后构建并安装本地目录：
+## 开发
+
+本仓库独立可构建：所有 `@deepseek-ai/*` 类型从 npm 上的已发布包解析，typecheck、测试、构建都不需要 DeepSeek Harness 源码 checkout：
 
 ```sh
-# 在 Harness checkout 根目录执行：
-pnpm exec tsc -b custom-plugins/dsh-skills-viewer --pretty false
-pnpm exec tsdown --config custom-plugins/dsh-skills-viewer/tsdown.config.ts
-pnpm dsh plugin --profile web add -w ./custom-plugins/dsh-skills-viewer
+pnpm install
+pnpm run typecheck
+pnpm test
+pnpm run build
 ```
 
-（`pnpm dsh` 运行的是该 checkout 自带的 CLI——`apps/cli`；`add` 的相对路径按调用目录解析。）
+把本地构建装进 profile：在任何装有 `dsh` 的机器上执行 `dsh plugin --profile web add -w /path/to/dsh-skills-viewer`——只有挂载这一步需要 Harness CLI（`dsh plugin` 把参数转发给 pnpm，`-w` 是必须的，因为 Web profile 目录本身是 pnpm workspace 根）。
 
 移除方式：
 

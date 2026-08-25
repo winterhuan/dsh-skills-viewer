@@ -1,10 +1,26 @@
 /** Skills section registration: slot declaration injection, locale labels, and teardown. */
 import { Context } from '@deepseek-ai/cordis'
-import { describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { resolveSlotLabel } from '@deepseek-ai/dsh-client-ui-slots'
 import { SlotRegistry } from '@deepseek-ai/dsh-client-runtime/client'
 import { LocaleRuntime } from '@deepseek-ai/dsh-client-locale/client'
-import { usePinnedBrowserLanguages } from '@deepseek-ai/dsh-client-test-runtime'
+/**
+ * Browser-language pin for specs that assert localized copy. Semantics
+ * match the harness's `dsh-client-test-runtime` helper (whose published
+ * bundle imports browser-graph sources not shipped on npm), kept local so
+ * the spec tree stays standalone-installable.
+ */
+function usePinnedBrowserLanguages(primary: string): void {
+  beforeEach(() => {
+    Object.defineProperty(navigator, 'languages', { value: [primary], configurable: true })
+    Object.defineProperty(navigator, 'language', { value: primary, configurable: true })
+  })
+  afterEach(() => {
+    const own = navigator as unknown as Record<string, unknown>
+    delete own.languages
+    delete own.language
+  })
+}
 import { apply, inject } from '../src/client/index.ts'
 import { SkillsSection } from '../src/client/SkillsSection.tsx'
 import type { SkillsSectionInjected } from '../src/client/SkillsSection.tsx'

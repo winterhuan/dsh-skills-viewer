@@ -1,36 +1,31 @@
 {
-  "extends": "../../tsconfig.base.client.json",
+  // Standalone (no DeepSeek Harness checkout): the strictness set is inlined
+  // from the harness tsconfig.base.client.json; @deepseek-ai/* types resolve
+  // from the packages published on npm.
   "compilerOptions": {
+    "target": "es2024",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "lib": ["ES2024", "DOM", "DOM.Iterable"],
+    "jsx": "react-jsx",
     "rootDir": "src",
     "outDir": "lib/types",
-    "typeRoots": [
-      "../../node_modules/.pnpm/@types+react@18.3.31/node_modules/@types"
-    ]
+    "composite": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "allowImportingTsExtensions": true,
+    "rewriteRelativeImportExtensions": true,
+    "verbatimModuleSyntax": false,
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true
   },
-  "include": [
-    "src"
-  ],
-  "references": [
-    {
-      "path": "../../vendor/cordis"
-    },
-    {
-      "path": "../../packages/client/ui-slots"
-    },
-    {
-      "path": "../../packages/client/runtime"
-    },
-    {
-      "path": "../../packages/client/ui-settings"
-    },
-    {
-      "path": "../../packages/client/locale"
-    },
-    {
-      "path": "../../packages/runtime-diagnostics/invariants"
-    },
-    {
-      "path": "../../packages/api/remotes/tsconfig.client.json"
-    }
-  ]
+  "include": ["src"]
 }

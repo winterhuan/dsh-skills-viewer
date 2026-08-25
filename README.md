@@ -18,16 +18,18 @@ The `-w` (`--workspace-root`) flag is required because the Web profile directory
 
 The package declares `dsh.bundle`, so `dsh plugin add` inserts the `skills-viewer` row automatically; do not edit the profile's `cordis.patch.yml` by hand. The package also declares `dsh.client`, which lets the Web host serve its prebuilt browser bundle from `lib/client.js`.
 
-For a source checkout, place the directory at `custom-plugins/dsh-skills-viewer` inside a DeepSeek Harness checkout — `tsconfig.json` resolves `../../tsconfig.base.client.json`, `../../vendor/cordis`, and the `../../packages/*` project references from exactly that location — then build and install it:
+## Development
+
+This repository is standalone: every `@deepseek-ai/*` type resolves from the packages published on npm, so typecheck, tests, and build need no DeepSeek Harness checkout:
 
 ```sh
-# From the Harness checkout root:
-pnpm exec tsc -b custom-plugins/dsh-skills-viewer --pretty false
-pnpm exec tsdown --config custom-plugins/dsh-skills-viewer/tsdown.config.ts
-pnpm dsh plugin --profile web add -w ./custom-plugins/dsh-skills-viewer
+pnpm install
+pnpm run typecheck
+pnpm test
+pnpm run build
 ```
 
-(`pnpm dsh` runs the checkout's own CLI from `apps/cli`; relative `add` path specs are anchored to the invoking directory.)
+To install the local build into a profile, run `dsh plugin --profile web add -w /path/to/dsh-skills-viewer` from any machine with `dsh` on `PATH` — only this mount step needs the Harness CLI (`dsh plugin` forwards its arguments to pnpm, and `-w` is required because the Web profile directory is itself a pnpm workspace root).
 
 Remove it with:
 
