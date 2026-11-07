@@ -68,7 +68,6 @@
     "zustand": "~4.4.7",
     "@deepseek-ai/dsh-agent": "0.2.2-rc.1",
     "@deepseek-ai/dsh-agent-loop": "0.2.2-rc.1",
-    "@deepseek-ai/dsh-agent-loop-testkit": "0.2.2-rc.1",
     "@deepseek-ai/dsh-agent-preset-registry": "0.2.2-rc.1",
     "@deepseek-ai/dsh-persona": "0.2.2-rc.1",
     "@deepseek-ai/dsh-session": "0.2.2-rc.1"
