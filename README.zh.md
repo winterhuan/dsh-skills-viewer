@@ -1,60 +1,37 @@
-# @winterchenhuan/dsh-skills-viewer
+# DSH Skills Viewer
 
 [English](README.md) | 中文
 
-DeepSeek Harness Web 的自定义技能列表设置页。它在 Settings 面板注册一个“技能”页面，通过既有 `skill.list` wire RPC 获取当前普通 session 的用户可调用技能目录，并以只读列表呈现。
+在 DeepSeek Harness Web 中浏览当前会话的技能、完整指令和本地参考文件。
+
+**只安装一个组合包** `@winterhuan/dsh-skill-viewer`。它随包包含客户端 `@winterhuan/dsh-client-ui-skill-viewer`；两个包在此仓库共同维护，统一发布为 `0.1.8`。
 
 ## 安装
 
-使用 Harness 插件命令安装到 Web profile（`dsh` 与 `pnpm` 都需在 `PATH` 中，`dsh plugin` 会把参数转发给 pnpm）：
+在 DSH `0.2.2-rc.1` 的「插件 → 发现」添加 `https://winterhuan.github.io/dsh-creative/index.json`，安装技能查看器。也可以安装预构建版本：
 
 ```sh
-dsh plugin --profile web add -w @winterchenhuan/dsh-skills-viewer
-dsh web --dump-config     # 确认 skills-viewer 层已生效
-dsh web                   # 启动 Web GUI
+dsh plugin --profile web add 'git+https://github.com/winterhuan/dsh-skills-viewer.git#v0.1.8&path:/plugin'
 ```
 
-`-w`（`--workspace-root`）标志是必需的：Web profile 目录本身是一个 pnpm workspace 根（`pnpm-workspace.yaml` 内容为 `packages: [.]`），不加该标志时 pnpm 会以 `ERR_PNPM_ADDING_TO_ROOT` 拒绝 `add`。`dsh plugin` 会把参数原样转发给 pnpm，因此该标志会直接透传。
+重启 DSH 后，打开侧边栏底部的**技能**。客户端无需单独安装。
 
-该包声明了 `dsh.bundle`，因此 `dsh plugin add` 会自动插入 `skills-viewer` row，不需要手动修改 profile 的 `cordis.patch.yml`。该包也声明了 `dsh.client`，Web host 会据此加载预构建的浏览器 bundle `lib/client.js`。
+[服务端说明](packages/winterhuan/skill-viewer/README.zh.md) · [客户端说明](packages/winterhuan/ui-skill-viewer/README.zh.md) · [发布版本](https://github.com/winterhuan/dsh-skills-viewer/releases/tag/v0.1.8)
 
 ## 开发
 
-本仓库独立可构建：所有 `@deepseek-ai/*` 类型从 npm 上的已发布包解析，typecheck、测试、构建都不需要 DeepSeek Harness 源码 checkout：
+使用 Node 24 或 Node 22.19 及以上版本，pnpm 11.7.0。两个包使用本地 workspace 依赖。upstream 子模块提供客户端测试源码；构建使用发布版 DSH 依赖。
 
 ```sh
+git clone https://github.com/winterhuan/dsh-skills-viewer.git
+cd dsh-skills-viewer
+git submodule update --init
 pnpm install
 pnpm run typecheck
-pnpm test
 pnpm run build
+pnpm test
 ```
 
-把本地构建装进 profile：在任何装有 `dsh` 的机器上执行 `dsh plugin --profile web add -w /path/to/dsh-skills-viewer`——只有挂载这一步需要 Harness CLI（`dsh plugin` 把参数转发给 pnpm，`-w` 是必须的，因为 Web profile 目录本身是 pnpm workspace 根）。
+服务端包位于 `packages/winterhuan/skill-viewer`，客户端位于 `packages/winterhuan/ui-skill-viewer`。
 
-移除方式：
-
-```sh
-dsh plugin --profile web remove @winterchenhuan/dsh-skills-viewer
-```
-
-## 组合
-
-这是纯 UI 插件。node half 的 `apply` 为空；browser half 从 `./client` 导出，经 `dsh.client` manifest 发现，并在 `@deepseek-ai/dsh-client-runtime`、`@deepseek-ai/dsh-client-ui-settings`、`@deepseek-ai/dsh-client-locale` 和 `@deepseek-ai/dsh-api-remotes` 可用后注入。它注入 `slots`、`locale` 和 `connection`，再通过 `ctx.slots.inject('settings.section', ...)` 注册一个 `settings.section` 列表项（id `skills`，order `90`），因此不依赖 declaration 顺序。
-
-## 页面行为
-
-页面从 `useSessions` 标准 prop 读取当前 session id 和当前 subagent address。当前导航指向普通 session 时，它调用 `connection.api.skills.list({ sessionId })` 获取目录。技能发现按 session 作用域解析：composition、cwd 和 preset layer 都会影响可见技能，因此页面会在当前 session 变化时重新获取。没有当前 session，或当前导航指向 subagent address 时，页面显示空态且不调用 `skill.list`。如果选中的 session 尚未在 Host 侧连接，页面会短暂自动重试，随后显示重试按钮，而不是直接暴露原始 `session-not-found` 诊断。
-
-每条技能行展示：
-
-- **name** — kebab-case 标识符（等宽字体）
-- **模型不可调用**徽章 — 当 `disable-model-invocation: true` 时显示
-- **description** — 路由描述
-- **whenToUse** — 可选的额外路由说明（斜体）
-
-列表按技能名升序排列。搜索框按 name、description 或 `whenToUse` 过滤（不区分大小写）；当搜索收窄结果时计数行显示 `M of N`，无匹配时显示占位提示。
-
-## 已知限制与后续工作
-
-- **不预览技能正文** — 页面只列出摘要；加载技能正文仍需使用面向模型的 `skill` 工具。未来的内联预览可以调用新的 preview RPC。
-- **没有刷新按钮或推送失效** — 页面会在 session 变化时重新获取，但不会手动刷新，也不会订阅 `skills/change`。
+`pnpm run build` 同时生成预构建的 `plugin/` 目录和 `.artifacts/` 中的组合压缩包。Git 安装使用 `plugin/`，其中包含两个组件，无需构建或访问其他插件仓库。

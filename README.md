@@ -1,60 +1,37 @@
-# @winterchenhuan/dsh-skills-viewer
+# DSH Skills Viewer
 
 English | [中文](README.zh.md)
 
-Custom Skills list settings page for DeepSeek Harness Web. It registers a "Skills" page in the Settings panel, fetches the current ordinary session's user-invocable skill catalog through the existing `skill.list` wire RPC, and renders it as a read-only list.
+Browse the current session's skills, full instructions, and local reference files in DeepSeek Harness Web.
+
+Install **one bundle**, `@winterhuan/dsh-skill-viewer`. It includes the client `@winterhuan/dsh-client-ui-skill-viewer`; both packages are maintained here and released together at `0.1.8`.
 
 ## Install
 
-Install the bundle into the Web profile with the Harness plugin command. Both `dsh` and `pnpm` must be on `PATH` (`dsh plugin` forwards its arguments to pnpm):
+For DSH `0.2.2-rc.1`, add `https://winterhuan.github.io/dsh-creative/index.json` in Plugins → Discover and install Skill viewer. Or install the prebuilt release:
 
 ```sh
-dsh plugin --profile web add -w @winterchenhuan/dsh-skills-viewer
-dsh web --dump-config     # verify the skills-viewer layer is present
-dsh web                   # boot the Web GUI
+dsh plugin --profile web add 'git+https://github.com/winterhuan/dsh-skills-viewer.git#v0.1.8&path:/plugin'
 ```
 
-The `-w` (`--workspace-root`) flag is required because the Web profile directory is itself a pnpm workspace root (`pnpm-workspace.yaml` with `packages: [.]`); without it pnpm refuses `add` there with `ERR_PNPM_ADDING_TO_ROOT`. `dsh plugin` forwards arguments verbatim to pnpm, so the flag is passed through as-is.
+Restart DSH, then open **Skills** at the bottom of the sidebar. The client needs no separate installation.
 
-The package declares `dsh.bundle`, so `dsh plugin add` inserts the `skills-viewer` row automatically; do not edit the profile's `cordis.patch.yml` by hand. The package also declares `dsh.client`, which lets the Web host serve its prebuilt browser bundle from `lib/client.js`.
+[Host documentation](packages/winterhuan/skill-viewer/README.md) · [Client documentation](packages/winterhuan/ui-skill-viewer/README.md) · [Release](https://github.com/winterhuan/dsh-skills-viewer/releases/tag/v0.1.8)
 
 ## Development
 
-This repository is standalone: every `@deepseek-ai/*` type resolves from the packages published on npm, so typecheck, tests, and build need no DeepSeek Harness checkout:
+Use Node 24 or Node 22.19 and later, with pnpm 11.7.0. The two packages use local workspace dependencies. The upstream submodule supplies client test sources; builds use published DSH dependencies.
 
 ```sh
+git clone https://github.com/winterhuan/dsh-skills-viewer.git
+cd dsh-skills-viewer
+git submodule update --init
 pnpm install
 pnpm run typecheck
-pnpm test
 pnpm run build
+pnpm test
 ```
 
-To install the local build into a profile, run `dsh plugin --profile web add -w /path/to/dsh-skills-viewer` from any machine with `dsh` on `PATH` — only this mount step needs the Harness CLI (`dsh plugin` forwards its arguments to pnpm, and `-w` is required because the Web profile directory is itself a pnpm workspace root).
+The Host package is in `packages/winterhuan/skill-viewer`; the client is in `packages/winterhuan/ui-skill-viewer`.
 
-Remove it with:
-
-```sh
-dsh plugin --profile web remove @winterchenhuan/dsh-skills-viewer
-```
-
-## Composition
-
-This is a pure UI plugin. The node half `apply` is empty; the browser half is exported from `./client`, discovered through the `dsh.client` manifest, and injected after `@deepseek-ai/dsh-client-runtime`, `@deepseek-ai/dsh-client-ui-settings`, `@deepseek-ai/dsh-client-locale`, and `@deepseek-ai/dsh-api-remotes` are available. It injects `slots`, `locale`, and `connection`, then registers one `settings.section` list entry (id `skills`, order `90`) through `ctx.slots.inject('settings.section', ...)` so declaration order does not matter.
-
-## Page behavior
-
-The page reads the current session id and current subagent address from the `useSessions` standard prop. With an ordinary current session, it calls `connection.api.skills.list({ sessionId })` to fetch the catalog. Skill discovery is session-scoped: composition, cwd, and preset layer affect which skills are visible, so the page refetches when the current session changes. With no current session, or while the current navigation points at a subagent address, the page shows the empty state and does not call `skill.list`. A selected session that is still detached host-side is retried briefly and then shows a retry action instead of the raw `session-not-found` diagnostic.
-
-Each skill row displays:
-
-- **name** — kebab-case identifier (monospace)
-- **model: off** badge — when `disable-model-invocation: true`
-- **description** — routing description
-- **whenToUse** — optional extra routing guidance (italic)
-
-The list is sorted alphabetically by skill name. A search box filters rows by name, description, or `whenToUse` (case-insensitive); the count line shows `M of N` when a search narrows the result, and a no-match placeholder when nothing remains.
-
-## Known Limitations and Deferred Work
-
-- **No skill body preview** — the page lists summaries only; loading a skill body requires the model-facing `skill` tool. A future inline preview could call a new preview RPC.
-- **No refresh button or push invalidation** — the page refetches on session change but does not manually refresh or subscribe to `skills/change`.
+`pnpm run build` also creates the prebuilt `plugin/` directory and a bundled archive in `.artifacts/`. Git installation uses `plugin/`, which contains both components and requires no build or access to another plugin repository.

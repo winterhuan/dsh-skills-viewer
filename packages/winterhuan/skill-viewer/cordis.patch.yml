@@ -1,0 +1,5 @@
+- insert:
+    - id: skill-viewer
+      name: '@winterhuan/dsh-skill-viewer'
+    - id: ui-skill-viewer
+      name: '@winterhuan/dsh-client-ui-skill-viewer'

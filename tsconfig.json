@@ -1,31 +1,11 @@
 {
-  // Standalone (no DeepSeek Harness checkout): the strictness set is inlined
-  // from the harness tsconfig.base.client.json; @deepseek-ai/* types resolve
-  // from the packages published on npm.
-  "compilerOptions": {
-    "target": "es2024",
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "lib": ["ES2024", "DOM", "DOM.Iterable"],
-    "jsx": "react-jsx",
-    "rootDir": "src",
-    "outDir": "lib/types",
-    "composite": true,
-    "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
-    "allowImportingTsExtensions": true,
-    "rewriteRelativeImportExtensions": true,
-    "verbatimModuleSyntax": false,
-    "strict": true,
-    "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true,
-    "noImplicitOverride": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true
-  },
-  "include": ["src"]
+  "files": [],
+  "references": [
+    {
+      "path": "./tsconfig.host.json"
+    },
+    {
+      "path": "./tsconfig.client.json"
+    }
+  ]
 }

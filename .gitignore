@@ -1,5 +1,13 @@
 node_modules/
+.pnpm-store/
 lib/
 *.tsbuildinfo
+.artifacts/
+coverage/
+packages/**/__pycache__/
+.venv/
 .DS_Store
-pnpm-lock.yaml
+.dsh-build/
+packages/**/lib/**/*.map
+!plugin/
+!plugin/**
