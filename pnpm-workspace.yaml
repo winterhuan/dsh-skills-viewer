@@ -1,6 +1,9 @@
 packages:
   - packages/winterhuan/ui-skill-viewer
 
+# The host dependency installs the client package from its pinned GitHub Release URL.
+blockExoticSubdeps: false
+
 allowBuilds:
   '@deepseek-ai/dsh-subprocess-local': true
   '@google/genai': false
