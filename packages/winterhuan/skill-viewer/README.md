@@ -26,6 +26,14 @@ The composer's `skills` Remote namespace keeps serving the slash source. That pa
 <a id="use-this-package"></a>
 ## Use this package
 
+Install the prebuilt release through the [plugin market](https://winterhuan.github.io/dsh-creative/index.json), or use this pinned Git source with DSH `0.2.2-rc.1`:
+
+```sh
+dsh plugin --profile market add 'git+https://github.com/winterhuan/dsh-skill-viewer.git#f2a01f5ed07d57530710a31c03a3c7e891b08e34&path:/packages/winterhuan/skill-viewer'
+```
+
+Replace `market` with the name of your existing DSH profile.
+
 `dsh plugin add` installs this bundle; its [profile patch](cordis.patch.yml) mounts this plugin alongside its client viewer. The `skillViewer` namespace provides `listDetails({ sessionId })` for user-invocable entries with source metadata, `get({ sessionId, name })` for a skill body and local reference listing, and `readReference({ sessionId, name, path })` for a UTF-8 file preview under that skill's `references/` directory.
 
 The plugin requires `sessionQuery`, `agents`, and `typert`. `agentPresets` is optional; requests use the live Agent's scoped `skills` registry when available, otherwise the host registry. An absent registry fails the request instead of serving an empty catalog.

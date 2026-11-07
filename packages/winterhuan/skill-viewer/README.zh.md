@@ -26,6 +26,14 @@ composer 侧的 `skills` Remote 命名空间继续服务斜杠来源。那份载
 <a id="use-this-package"></a>
 ## Use this package
 
+通过[插件市场](https://winterhuan.github.io/dsh-creative/index.json)安装预构建版本，或在 DSH `0.2.2-rc.1` 中安装以下固定 Git 提交：
+
+```sh
+dsh plugin --profile market add 'git+https://github.com/winterhuan/dsh-skill-viewer.git#f2a01f5ed07d57530710a31c03a3c7e891b08e34&path:/packages/winterhuan/skill-viewer'
+```
+
+将 `market` 替换为你已有的 DSH profile 名称。
+
 `dsh plugin add` 安装本 bundle，其 [profile 补丁](cordis.patch.yml)同时挂载本插件与客户端查看器。`skillViewer` 命名空间提供三个方法：`listDetails({ sessionId })` 返回带来源元数据的用户可调用条目，`get({ sessionId, name })` 返回技能正文与本地参考文件列表，`readReference({ sessionId, name, path })` 返回该技能 `references/` 目录中文件的 UTF-8 预览。
 
 插件要求 `sessionQuery`、`agents` 与 `typert`。`agentPresets` 可选；请求优先使用活跃 Agent 的作用域 `skills` 注册表，否则使用宿主注册表。注册表缺失时请求失败，而不是返回空目录。

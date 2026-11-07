@@ -3,5 +3,5 @@
 # After editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write README.md
 /winterhuan-dsh-skill-viewer:
-  en: 7521ac195ebd123a
-  zh: 82c739d323a03bc3
+  en: 6913bcee9e5b8f6c
+  zh: 1383c4107fddc9cf
