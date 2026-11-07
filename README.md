@@ -9,7 +9,7 @@ Read-only skill catalog and body Remote for the skill viewer.
 For DSH `0.2.2-rc.1`, enable Custom plugin market and add `https://winterhuan.github.io/dsh-creative/index.json` in Discover. Alternatively, install the prebuilt Git version with pnpm 11.7.0:
 
 ```sh
-dsh plugin --profile market add 'git+https://github.com/winterhuan/dsh-skill-viewer.git#f2a01f5ed07d57530710a31c03a3c7e891b08e34&path:/packages/winterhuan/skill-viewer'
+dsh plugin --profile market add 'git+https://github.com/winterhuan/dsh-skill-viewer.git#17f32acc7f639b00090e8daa60d575058d574e81&path:/packages/winterhuan/skill-viewer'
 ```
 
 Replace `market` with the name of your existing DSH profile.
