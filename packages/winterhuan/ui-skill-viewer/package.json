@@ -1,7 +1,7 @@
 {
   "name": "@winterhuan/dsh-client-ui-skill-viewer",
   "description": "Web skill viewer panel for the dsh web client",
-  "version": "0.1.5-rc.3",
+  "version": "0.1.8",
   "publishConfig": {
     "access": "public"
   },
@@ -63,7 +63,7 @@
     "@deepseek-ai/dsh-typert-protocol": "0.2.2-rc.1",
     "@testing-library/react": "^16.1.0",
     "@types/react": "~18.3.1",
-    "@winterhuan/dsh-skill-viewer": "https://github.com/winterhuan/dsh-skill-viewer/releases/download/v0.1.5-rc.2/winterhuan-dsh-skill-viewer-0.1.5-rc.2.tgz",
+    "@winterhuan/dsh-skill-viewer": "https://github.com/winterhuan/dsh-skill-viewer/releases/download/v0.1.8/winterhuan-dsh-skill-viewer-0.1.8.tgz",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
