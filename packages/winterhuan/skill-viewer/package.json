@@ -76,5 +76,8 @@
     "node": "^22.19.0 || >=24.0.0",
     "dsh": "0.2.2-rc.1"
   },
-  "homepage": "https://github.com/winterhuan/dsh-skill-viewer#readme"
+  "homepage": "https://github.com/winterhuan/dsh-skill-viewer#readme",
+  "bundledDependencies": [
+    "@winterhuan/dsh-client-ui-skill-viewer"
+  ]
 }

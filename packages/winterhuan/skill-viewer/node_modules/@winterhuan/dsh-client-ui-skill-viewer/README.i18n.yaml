@@ -1,0 +1,34 @@
+# Bilingual-pair consistency record for README.md (docs/i18n/README.md): per heading
+# section, a hash of its English and Chinese blocks outside code blocks and generated regions.
+# After editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write packages/winterhuan/ui-skill-viewer/README.md
+/:
+  en: e1d70ab6a61dde49
+  zh: bded5b77e341dbdd
+/winterhuan-dsh-client-ui-skill-viewer:
+  en: 9ba2c2f175d5e73d
+  zh: d9bc5695d3b9ccbf
+/winterhuan-dsh-client-ui-skill-viewer/summary:
+  en: 962308b444b62464
+  zh: a49fc9a8c6ddeec0
+/winterhuan-dsh-client-ui-skill-viewer/table-of-contents:
+  en: 3460b3e585e0c020
+  zh: 7f26badc8c290813
+/winterhuan-dsh-client-ui-skill-viewer/use-this-package:
+  en: fe6ab8dd16479df4
+  zh: 89cabdb93142865d
+/winterhuan-dsh-client-ui-skill-viewer/understand-the-implementation:
+  en: 6f1df687358c3e9c
+  zh: f3836dce09eac080
+/winterhuan-dsh-client-ui-skill-viewer/model-experience:
+  en: c8372b3d4e9bb0c4
+  zh: 07257b6f5d9d96a0
+/winterhuan-dsh-client-ui-skill-viewer/model-experience/kv-cache-effect:
+  en: 47f982e326fe77fd
+  zh: 35cc0863703a658c
+/winterhuan-dsh-client-ui-skill-viewer/known-limitations-and-deferred-work:
+  en: 3fb6cb0ac8f9692b
+  zh: be66bb3fea75892a
+/winterhuan-dsh-client-ui-skill-viewer/known-limitations-and-deferred-work/dev-note:
+  en: e67f633dc6fe7773
+  zh: 3bb0c20c93f16f98
