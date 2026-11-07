@@ -1,0 +1,10 @@
+node_modules/
+.pnpm-store/
+lib/
+*.tsbuildinfo
+.artifacts/
+coverage/
+packages/**/__pycache__/
+.venv/
+.DS_Store
+.dsh-build/

@@ -1,0 +1,10 @@
+{
+  // Browser compiler options: DOM library, React JSX, and build-time defines instead of Node types.
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "lib": ["ES2024", "DOM", "DOM.Iterable", "ESNext.Disposable"],
+    "typeRoots": ["./types", "./node_modules/@types"],
+    "types": ["client-build-environment"]
+  }
+}

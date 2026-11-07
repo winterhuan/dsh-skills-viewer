@@ -1,0 +1,17 @@
+{
+  // Repository scripts: documentation and code gates, client build presets and test
+  // helpers. Checked only; tsx, tsdown and Vitest load them from source.
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "composite": false,
+    "incremental": false,
+    "declaration": false,
+    "declarationMap": false,
+    "sourceMap": false,
+    "noEmit": true
+  },
+  "include": ["scripts/**/*.ts", "tsdown.config.ts"],
+  // Upstream type-checks neither this copy nor the Vitest configuration that imports it;
+  // the copy fails exactOptionalPropertyTypes.
+  "exclude": ["scripts/vitest-shared.ts"]
+}
