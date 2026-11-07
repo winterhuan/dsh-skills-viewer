@@ -213,8 +213,8 @@ importers:
         specifier: ~3.19.0
         version: 3.19.0
       '@winterhuan/dsh-client-ui-skill-viewer':
-        specifier: https://github.com/winterhuan/dsh-client-ui-skill-viewer/releases/download/v0.1.5-rc.2/winterhuan-dsh-client-ui-skill-viewer-0.1.5-rc.2.tgz
-        version: https://github.com/winterhuan/dsh-client-ui-skill-viewer/releases/download/v0.1.5-rc.2/winterhuan-dsh-client-ui-skill-viewer-0.1.5-rc.2.tgz(@deepseek-ai/cordis@4.1.0)
+        specifier: git+https://github.com/winterhuan/dsh-client-ui-skill-viewer.git#791c6632bb8ed7e9f6bdc2a3401a5b2e0e0caaf1&path:/packages/winterhuan/ui-skill-viewer
+        version: https://codeload.github.com/winterhuan/dsh-client-ui-skill-viewer/tar.gz/791c6632bb8ed7e9f6bdc2a3401a5b2e0e0caaf1#path:/packages/winterhuan/ui-skill-viewer(@deepseek-ai/cordis@4.1.0)
       zod:
         specifier: ^4.4.3
         version: 4.4.3
@@ -1470,10 +1470,10 @@ packages:
   '@vitest/utils@4.1.11':
     resolution: {integrity: sha512-zTCVGpyFsGWBhllOyKlTw/vnr6D9qxsfSDyfbyZmTyjHw5N/VuvzHpHoQjm2ZJzn4RJgx5w4r7V0er69CmLgPQ==}
 
-  '@winterhuan/dsh-client-ui-skill-viewer@https://github.com/winterhuan/dsh-client-ui-skill-viewer/releases/download/v0.1.5-rc.2/winterhuan-dsh-client-ui-skill-viewer-0.1.5-rc.2.tgz':
-    resolution: {integrity: sha512-vw0GBETrFErW7iPIQXpXItJpSfcQVl6Ay34iFXFXr9Qr650UjALcamucKkygr78jcN+HSMFkGjwNR52VMz/UQw==, tarball: https://github.com/winterhuan/dsh-client-ui-skill-viewer/releases/download/v0.1.5-rc.2/winterhuan-dsh-client-ui-skill-viewer-0.1.5-rc.2.tgz}
-    version: 0.1.5-rc.2
-    engines: {node: ^22.19.0 || >=24.0.0}
+  '@winterhuan/dsh-client-ui-skill-viewer@https://codeload.github.com/winterhuan/dsh-client-ui-skill-viewer/tar.gz/791c6632bb8ed7e9f6bdc2a3401a5b2e0e0caaf1#path:/packages/winterhuan/ui-skill-viewer':
+    resolution: {gitHosted: true, integrity: sha512-AFC4LMXSbf/j5/XRAfvcMSubEUnyuCXbxISNudBozxg+3V8FMOL+qCEpTzEZTQpQV+d9QjXm8v0QFkEywxieGQ==, path: /packages/winterhuan/ui-skill-viewer, tarball: https://codeload.github.com/winterhuan/dsh-client-ui-skill-viewer/tar.gz/791c6632bb8ed7e9f6bdc2a3401a5b2e0e0caaf1}
+    version: 0.1.5-rc.3
+    engines: {dsh: 0.2.2-rc.1, node: ^22.19.0 || >=24.0.0}
     peerDependencies:
       '@deepseek-ai/cordis': ~4.1.0
 
@@ -3819,7 +3819,7 @@ snapshots:
       convert-source-map: 2.0.0
       tinyrainbow: 3.1.1
 
-  '@winterhuan/dsh-client-ui-skill-viewer@https://github.com/winterhuan/dsh-client-ui-skill-viewer/releases/download/v0.1.5-rc.2/winterhuan-dsh-client-ui-skill-viewer-0.1.5-rc.2.tgz(@deepseek-ai/cordis@4.1.0)':
+  '@winterhuan/dsh-client-ui-skill-viewer@https://codeload.github.com/winterhuan/dsh-client-ui-skill-viewer/tar.gz/791c6632bb8ed7e9f6bdc2a3401a5b2e0e0caaf1#path:/packages/winterhuan/ui-skill-viewer(@deepseek-ai/cordis@4.1.0)':
     dependencies:
       '@deepseek-ai/cordis': 4.1.0(@deepseek-ai/cordis-plugin-include@1.1.0)(@deepseek-ai/cordis-plugin-loader@1.1.0)
 
