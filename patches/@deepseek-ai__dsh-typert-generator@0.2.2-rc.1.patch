@@ -1,0 +1,14 @@
+diff --git a/lib/types/analyzer.js b/lib/types/analyzer.js
+index e163a91fc21fe0584af72dd18bd4e63ca022cdf7..f74d2ad7c32e95ee8c8133f66f30e7fa65dc8bf7 100644
+--- a/lib/types/analyzer.js
++++ b/lib/types/analyzer.js
+@@ -1798,6 +1798,9 @@ class FaceAnalyzer {
+         const registration = this.registrationForFile(declaration.getSourceFile().fileName);
+         if (registration?.name === '@deepseek-ai/dsh-typert-protocol')
+             return true;
++        // Repositories outside the DSH monorepo install the protocol from npm instead of a workspace package.
++        if (externalModuleIdentityForFile(declaration.getSourceFile().fileName)?.package === '@deepseek-ai/dsh-typert-protocol')
++            return true;
+         for (let current = declaration; current !== undefined; current = optionalParent(current)) {
+             if (ts.isModuleDeclaration(current)
+                 && ts.isStringLiteral(current.name)

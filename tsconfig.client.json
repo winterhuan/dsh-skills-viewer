@@ -1,0 +1,8 @@
+{
+  "files": [],
+  "references": [
+    {
+      "path": "./packages/winterhuan/ui-skill-viewer"
+    }
+  ]
+}
