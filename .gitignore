@@ -8,3 +8,6 @@ packages/**/__pycache__/
 .venv/
 .DS_Store
 .dsh-build/
+!packages/winterhuan/ui-skill-viewer/lib/
+packages/**/lib/**/*.map
+packages/**/lib/types/**/*.js
