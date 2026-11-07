@@ -4,7 +4,7 @@
 
 查看 DSH 技能目录、正文和本地参考资料。
 
-[插件说明](packages/winterhuan/skill-viewer/README.zh.md) · [发布包](https://github.com/winterhuan/dsh-skill-viewer/releases/download/v0.1.5-rc.3/winterhuan-dsh-skill-viewer-0.1.5-rc.3.tgz)
+[插件说明](packages/winterhuan/skill-viewer/README.zh.md) · [发布包](https://github.com/winterhuan/dsh-skill-viewer/releases/download/v0.1.8/winterhuan-dsh-skill-viewer-0.1.8.tgz)
 
 在 DSH `0.2.2-rc.1` 中启用「自定义插件市场」，在「发现」添加 `https://winterhuan.github.io/dsh-creative/index.json`。也可用 pnpm 11.7.0 安装已构建的 Git 版本：
 

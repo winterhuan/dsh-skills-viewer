@@ -1,7 +1,7 @@
 {
   "name": "@winterhuan/dsh-skill-viewer",
   "description": "Read-only skill catalog and body Remote for the skill viewer",
-  "version": "0.1.5-rc.3",
+  "version": "0.1.8",
   "publishConfig": {
     "access": "public"
   },
@@ -45,7 +45,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@winterhuan/dsh-client-ui-skill-viewer": "git+https://github.com/winterhuan/dsh-client-ui-skill-viewer.git#791c6632bb8ed7e9f6bdc2a3401a5b2e0e0caaf1&path:/packages/winterhuan/ui-skill-viewer",
+    "@winterhuan/dsh-client-ui-skill-viewer": "git+https://github.com/winterhuan/dsh-client-ui-skill-viewer.git#3f10bf5c46aae65a0308d242a9f89edcb6ad4420&path:/packages/winterhuan/ui-skill-viewer",
     "@deepseek-ai/schemastery": "~3.19.0",
     "zod": "^4.4.3"
   },
