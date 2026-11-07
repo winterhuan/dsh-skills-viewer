@@ -165,7 +165,7 @@ window.__ModuleLoader__.load({
 			}
 		};
 		//#endregion
-		//#region ../../../node_modules/.pnpm/@winterhuan+dsh-skill-viewer@https+++github.com+winterhuan+dsh-skill-viewer+releases+do_e52b1821c534880d67e86896568510c1/node_modules/@winterhuan/dsh-skill-viewer/lib/typert.remote-client.js
+		//#region ../../../node_modules/.pnpm/@winterhuan+dsh-skill-viewer@https+++github.com+winterhuan+dsh-skill-viewer+releases+do_23a586a7756bf7e947fee57e3a388c8e/node_modules/@winterhuan/dsh-skill-viewer/lib/typert.remote-client.js
 		let _winterhuan_dsh_skill_viewer_skillViewer_get_parameter_0$schema$value;
 		const _winterhuan_dsh_skill_viewer_skillViewer_get_parameter_0$schema = () => _winterhuan_dsh_skill_viewer_skillViewer_get_parameter_0$schema$value ??= zod.z.object({
 			"sessionId": zod.z.string().readonly().describe("Session whose cwd and preset select the catalog view."),

@@ -258,8 +258,8 @@ importers:
         specifier: ~18.3.1
         version: 18.3.28
       '@winterhuan/dsh-skill-viewer':
-        specifier: https://github.com/winterhuan/dsh-skill-viewer/releases/download/v0.1.5-rc.2/winterhuan-dsh-skill-viewer-0.1.5-rc.2.tgz
-        version: https://github.com/winterhuan/dsh-skill-viewer/releases/download/v0.1.5-rc.2/winterhuan-dsh-skill-viewer-0.1.5-rc.2.tgz(@deepseek-ai/cordis@4.1.0)(@deepseek-ai/dsh-session-query@0.2.2-rc.1(e7f0c26b6a7be20b9f23de99f9d457a2))(@deepseek-ai/dsh-skill@0.2.2-rc.1(@deepseek-ai/cordis@4.1.0)(@deepseek-ai/dsh-llm@0.2.2-rc.1(@deepseek-ai/cordis@4.1.0))(@deepseek-ai/dsh-scope@0.2.2-rc.1(@deepseek-ai/cordis@4.1.0)))(@deepseek-ai/dsh-typert-protocol@0.2.2-rc.1(@deepseek-ai/cordis@4.1.0))
+        specifier: https://github.com/winterhuan/dsh-skill-viewer/releases/download/v0.1.8/winterhuan-dsh-skill-viewer-0.1.8.tgz
+        version: https://github.com/winterhuan/dsh-skill-viewer/releases/download/v0.1.8/winterhuan-dsh-skill-viewer-0.1.8.tgz(@deepseek-ai/cordis@4.1.0)(@deepseek-ai/dsh-session-query@0.2.2-rc.1(e7f0c26b6a7be20b9f23de99f9d457a2))(@deepseek-ai/dsh-skill@0.2.2-rc.1(@deepseek-ai/cordis@4.1.0)(@deepseek-ai/dsh-llm@0.2.2-rc.1(@deepseek-ai/cordis@4.1.0))(@deepseek-ai/dsh-scope@0.2.2-rc.1(@deepseek-ai/cordis@4.1.0)))(@deepseek-ai/dsh-typert-protocol@0.2.2-rc.1(@deepseek-ai/cordis@4.1.0))
       react:
         specifier: ^18.2.0
         version: 18.3.1
@@ -1698,22 +1698,17 @@ packages:
   '@vitest/utils@4.1.11':
     resolution: {integrity: sha512-zTCVGpyFsGWBhllOyKlTw/vnr6D9qxsfSDyfbyZmTyjHw5N/VuvzHpHoQjm2ZJzn4RJgx5w4r7V0er69CmLgPQ==}
 
-  '@winterhuan/dsh-client-ui-skill-viewer@https://github.com/winterhuan/dsh-client-ui-skill-viewer/releases/download/v0.1.5-rc.2/winterhuan-dsh-client-ui-skill-viewer-0.1.5-rc.2.tgz':
-    resolution: {integrity: sha512-vw0GBETrFErW7iPIQXpXItJpSfcQVl6Ay34iFXFXr9Qr650UjALcamucKkygr78jcN+HSMFkGjwNR52VMz/UQw==, tarball: https://github.com/winterhuan/dsh-client-ui-skill-viewer/releases/download/v0.1.5-rc.2/winterhuan-dsh-client-ui-skill-viewer-0.1.5-rc.2.tgz}
-    version: 0.1.5-rc.2
-    engines: {node: ^22.19.0 || >=24.0.0}
-    peerDependencies:
-      '@deepseek-ai/cordis': ~4.1.0
-
-  '@winterhuan/dsh-skill-viewer@https://github.com/winterhuan/dsh-skill-viewer/releases/download/v0.1.5-rc.2/winterhuan-dsh-skill-viewer-0.1.5-rc.2.tgz':
-    resolution: {integrity: sha512-a08mZGLQIt975XrmOayn7uKlVFiBZdA0AQ3mSrbAsoeirhHZpfApxegY5Zsg7s7ID/soU1o4HNtJ9L++7dAaXQ==, tarball: https://github.com/winterhuan/dsh-skill-viewer/releases/download/v0.1.5-rc.2/winterhuan-dsh-skill-viewer-0.1.5-rc.2.tgz}
-    version: 0.1.5-rc.2
-    engines: {node: ^22.19.0 || >=24.0.0}
+  '@winterhuan/dsh-skill-viewer@https://github.com/winterhuan/dsh-skill-viewer/releases/download/v0.1.8/winterhuan-dsh-skill-viewer-0.1.8.tgz':
+    resolution: {integrity: sha512-7K5/EDLHMjfyKuZNt2641ihfXISoWm31bEtmMaxL4BiRgPWldMAU61By//089DHzKeX1nRmpt0w1iTvrX1VS6Q==, tarball: https://github.com/winterhuan/dsh-skill-viewer/releases/download/v0.1.8/winterhuan-dsh-skill-viewer-0.1.8.tgz}
+    version: 0.1.8
+    engines: {dsh: 0.2.2-rc.1, node: ^22.19.0 || >=24.0.0}
     peerDependencies:
       '@deepseek-ai/cordis': ~4.1.0
       '@deepseek-ai/dsh-session-query': 0.2.2-rc.1
       '@deepseek-ai/dsh-skill': 0.2.2-rc.1
       '@deepseek-ai/dsh-typert-protocol': 0.2.2-rc.1
+    bundledDependencies:
+      - '@winterhuan/dsh-client-ui-skill-viewer'
 
   '@yuku-codegen/binding-android-arm64@0.8.7':
     resolution: {integrity: sha512-C/0zV5IhgVdYhGJTwrY0v8dknxlhiKwtVJkMUaexu9/QvRmzlV4vfU3hZlUSgqc2BxQHntL1mCVbDq8j0FRFDw==}
@@ -4286,18 +4281,13 @@ snapshots:
       convert-source-map: 2.0.0
       tinyrainbow: 3.1.1
 
-  '@winterhuan/dsh-client-ui-skill-viewer@https://github.com/winterhuan/dsh-client-ui-skill-viewer/releases/download/v0.1.5-rc.2/winterhuan-dsh-client-ui-skill-viewer-0.1.5-rc.2.tgz(@deepseek-ai/cordis@4.1.0)':
-    dependencies:
-      '@deepseek-ai/cordis': 4.1.0(@deepseek-ai/cordis-plugin-include@1.1.0)(@deepseek-ai/cordis-plugin-loader@1.1.0)
-
-  '@winterhuan/dsh-skill-viewer@https://github.com/winterhuan/dsh-skill-viewer/releases/download/v0.1.5-rc.2/winterhuan-dsh-skill-viewer-0.1.5-rc.2.tgz(@deepseek-ai/cordis@4.1.0)(@deepseek-ai/dsh-session-query@0.2.2-rc.1(e7f0c26b6a7be20b9f23de99f9d457a2))(@deepseek-ai/dsh-skill@0.2.2-rc.1(@deepseek-ai/cordis@4.1.0)(@deepseek-ai/dsh-llm@0.2.2-rc.1(@deepseek-ai/cordis@4.1.0))(@deepseek-ai/dsh-scope@0.2.2-rc.1(@deepseek-ai/cordis@4.1.0)))(@deepseek-ai/dsh-typert-protocol@0.2.2-rc.1(@deepseek-ai/cordis@4.1.0))':
+  '@winterhuan/dsh-skill-viewer@https://github.com/winterhuan/dsh-skill-viewer/releases/download/v0.1.8/winterhuan-dsh-skill-viewer-0.1.8.tgz(@deepseek-ai/cordis@4.1.0)(@deepseek-ai/dsh-session-query@0.2.2-rc.1(e7f0c26b6a7be20b9f23de99f9d457a2))(@deepseek-ai/dsh-skill@0.2.2-rc.1(@deepseek-ai/cordis@4.1.0)(@deepseek-ai/dsh-llm@0.2.2-rc.1(@deepseek-ai/cordis@4.1.0))(@deepseek-ai/dsh-scope@0.2.2-rc.1(@deepseek-ai/cordis@4.1.0)))(@deepseek-ai/dsh-typert-protocol@0.2.2-rc.1(@deepseek-ai/cordis@4.1.0))':
     dependencies:
       '@deepseek-ai/cordis': 4.1.0(@deepseek-ai/cordis-plugin-include@1.1.0)(@deepseek-ai/cordis-plugin-loader@1.1.0)
       '@deepseek-ai/dsh-session-query': 0.2.2-rc.1(e7f0c26b6a7be20b9f23de99f9d457a2)
       '@deepseek-ai/dsh-skill': 0.2.2-rc.1(@deepseek-ai/cordis@4.1.0)(@deepseek-ai/dsh-llm@0.2.2-rc.1(@deepseek-ai/cordis@4.1.0))(@deepseek-ai/dsh-scope@0.2.2-rc.1(@deepseek-ai/cordis@4.1.0))
       '@deepseek-ai/dsh-typert-protocol': 0.2.2-rc.1(@deepseek-ai/cordis@4.1.0)
       '@deepseek-ai/schemastery': 3.19.0
-      '@winterhuan/dsh-client-ui-skill-viewer': https://github.com/winterhuan/dsh-client-ui-skill-viewer/releases/download/v0.1.5-rc.2/winterhuan-dsh-client-ui-skill-viewer-0.1.5-rc.2.tgz(@deepseek-ai/cordis@4.1.0)
       zod: 4.4.3
 
   '@yuku-codegen/binding-android-arm64@0.8.7':
