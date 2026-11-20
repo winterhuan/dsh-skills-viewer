@@ -1,7 +1,7 @@
 {
   "name": "@winterhuan/dsh-skill-viewer",
   "description": "Read-only skill catalog and body Remote for the skill viewer",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "publishConfig": {
     "access": "public"
   },

@@ -29,7 +29,7 @@ composer 侧的 `skills` Remote 命名空间继续服务斜杠来源。那份载
 通过[插件市场](https://winterhuan.github.io/dsh-creative/index.json)安装预构建版本，或在 DSH `0.2.2-rc.1` 中安装以下固定 Git 提交：
 
 ```sh
-dsh plugin --profile market add 'git+https://github.com/winterhuan/dsh-skills-viewer.git#v0.1.8&path:/plugin'
+dsh plugin --profile market add 'git+https://github.com/winterhuan/dsh-skills-viewer.git#v0.1.9&path:/plugin'
 ```
 
 将 `market` 替换为你已有的 DSH profile 名称。

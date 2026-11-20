@@ -4,19 +4,19 @@
 
 在 DeepSeek Harness Web 中浏览当前会话的技能、完整指令和本地参考文件。
 
-**只安装一个组合包** `@winterhuan/dsh-skill-viewer`。它随包包含客户端 `@winterhuan/dsh-client-ui-skill-viewer`；两个包在此仓库共同维护，统一发布为 `0.1.8`。
+**只安装一个组合包** `@winterhuan/dsh-skill-viewer`。它随包包含客户端 `@winterhuan/dsh-client-ui-skill-viewer`；两个包在此仓库共同维护，统一发布为 `0.1.9`。
 
 ## 安装
 
 在 DSH `0.2.2-rc.1` 的「插件 → 发现」添加 `https://winterhuan.github.io/dsh-creative/index.json`，安装技能查看器。也可以安装预构建版本：
 
 ```sh
-dsh plugin --profile web add 'git+https://github.com/winterhuan/dsh-skills-viewer.git#v0.1.8&path:/plugin'
+dsh plugin --profile web add 'git+https://github.com/winterhuan/dsh-skills-viewer.git#v0.1.9&path:/plugin'
 ```
 
 重启 DSH 后，打开侧边栏底部的**技能**。客户端无需单独安装。
 
-[服务端说明](packages/winterhuan/skill-viewer/README.zh.md) · [客户端说明](packages/winterhuan/ui-skill-viewer/README.zh.md) · [发布版本](https://github.com/winterhuan/dsh-skills-viewer/releases/tag/v0.1.8)
+[服务端说明](packages/winterhuan/skill-viewer/README.zh.md) · [客户端说明](packages/winterhuan/ui-skill-viewer/README.zh.md) · [发布版本](https://github.com/winterhuan/dsh-skills-viewer/releases/tag/v0.1.9)
 
 ## 开发
 

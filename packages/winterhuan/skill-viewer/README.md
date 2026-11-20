@@ -29,7 +29,7 @@ The composer's `skills` Remote namespace keeps serving the slash source. That pa
 Install the prebuilt release through the [plugin market](https://winterhuan.github.io/dsh-creative/index.json), or use this pinned Git source with DSH `0.2.2-rc.1`:
 
 ```sh
-dsh plugin --profile market add 'git+https://github.com/winterhuan/dsh-skills-viewer.git#v0.1.8&path:/plugin'
+dsh plugin --profile market add 'git+https://github.com/winterhuan/dsh-skills-viewer.git#v0.1.9&path:/plugin'
 ```
 
 Replace `market` with the name of your existing DSH profile.

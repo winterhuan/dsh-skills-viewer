@@ -1,7 +1,7 @@
 {
   "name": "@winterhuan/dsh-skill-viewer",
   "description": "Read-only skill catalog and body Remote for the skill viewer",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "publishConfig": {
     "access": "public"
   },
@@ -47,7 +47,7 @@
   "dependencies": {
     "@deepseek-ai/schemastery": "~3.19.0",
     "zod": "^4.4.3",
-    "@winterhuan/dsh-client-ui-skill-viewer": "0.1.8"
+    "@winterhuan/dsh-client-ui-skill-viewer": "0.1.9"
   },
   "peerDependencies": {
     "@deepseek-ai/dsh-session-query": "0.2.2-rc.1",
